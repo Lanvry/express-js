@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.datatables.net/2.3.7/css/dataTables.dataTables.min.css"
+    />
+  </head>
+  <body>
+    <h1>Kategori</h1>
+
+    <table id="myTable" class="display">
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>Nama</th>
+          <th>Aksi</th>
+        </tr>
+      </thead>
+      <tbody>
+  <% data.forEach(function(user, index) { %>
+    <tr>
+      <td><%= index + 1 %></td>
+      <td><%= user.name %></td>
+      <td><a href="" class="edit">Edit</a> <a href="" class="delete">Delete</a></td>
+    </tr>
+  <% }); %>
+
+      </tbody>
+    </table>
+
+    <script src="https://code.jquery.com/jquery-4.0.0.min.js" integrity="sha256-OaVG6prZf4v69dPg6PhVattBXkcOWQB62pdZ3ORyrao=" crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/2.3.7/js/dataTables.min.js"></script>
+    <script>
+      let table = new DataTable("#myTable");
+    </script>
+  </body>
+</html>
