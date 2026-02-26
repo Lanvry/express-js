@@ -1,18 +1,38 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <title>Dashboard Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/stylesheets/style.css" />
   </head>
   <body>
-    <form action="/test/username" method="post">
-      <label for="">Username</label>
-      <input type="text" name="text">
-      <label for="">Jenis Kelamin</label>
-      <input type="text" name="jenkel" id="">
-      <label for="">Umur</label>
-      <input type="number" name="age" id="">
-      <input type="submit" value="Kirim">
-    </form>
+    <div class="main-container">
+      <div class="header-section">
+        <div>
+          <h1>Selamat Datang, Admin</h1>
+          <p style="color: #64748b; margin-top: 8px;">Kelola data inventaris Anda di sini.</p>
+        </div>
+      </div>
+
+      <div class="dashboard-grid">
+        <div class="card nav-card">
+          <div class="card-body">
+            <div class="card-icon">📁</div>
+            <h3>Manajemen Kategori</h3>
+            <p>Tambah, edit, atau hapus kategori produk yang tersedia.</p>
+            <a href="/kategori" class="btn btn-primary">Buka Kategori</a>
+          </div>
+        </div>
+
+        <div class="card stats-card">
+          <div class="card-body">
+            <div class="card-icon">📊</div>
+            <h3>Total Kategori</h3>
+            <div class="stats-number"></div>
+            <p>Item terdaftar</p>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
