@@ -47,6 +47,22 @@ a.edit:hover {
   background: #b2ebf2;
   color: #004d40;
 }
+a.create {
+  display: inline-block;
+  padding: 4px 12px;
+  margin-right: 6px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 13px;
+  transition: background 0.2s, color 0.2s;
+  background: #e0f7fa;
+  color: #1b8dda;
+  border: 1px solid #b2ebf2;
+}
+a.create:hover {
+  background: #b2ebf2;
+  color: #0c5381;
+}
 a.delete {
   background: #ffebee;
   color: #c62828;

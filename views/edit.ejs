@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Edit Kategori </title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+  </head>
+  <body>
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+      <h1>Edit Kategori</h1>
+      <a href="/kategori" class="delete" style="text-decoration: none;">Kembali</a>
+    </div>
+
+    <form action="/kategori/update/<%= data.id_kategori %>" method="POST" style="margin-top: 20px;">
+      <div style="margin-bottom: 15px;">
+        <label for="nama_kategori" style="display: block; margin-bottom: 5px;">Nama Kategori</label>
+        <input 
+          type="text" 
+          id="nama_kategori" 
+          name="nama_kategori" 
+          placeholder="Masukkan nama kategori..." 
+          required 
+          value="<%= data.nama_kategori %>"
+          style="padding: 8px; width: 100%; max-width: 300px;"
+        />
+      </div>
+
+      <button type="submit" class="create" style="border: none; padding: 10px 15px; cursor: pointer;">
+        Simpan
+      </button>
+    </form>
+  </body>
+</html>

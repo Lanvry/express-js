@@ -9,7 +9,10 @@
     />
   </head>
   <body>
-    <h1>Kategori</h1>
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+      <h1>Kategori</h1>
+      <a href="kategori/create" class="create">Create</a>
+    </div>
 
     <table id="myTable" class="display">
       <thead>
@@ -23,8 +26,8 @@
   <% data.forEach(function(user, index) { %>
     <tr>
       <td><%= index + 1 %></td>
-      <td><%= user.name %></td>
-      <td><a href="" class="edit">Edit</a> <a href="" class="delete">Delete</a></td>
+      <td><%= user.nama_kategori %></td>
+      <td><a href="/kategori/edit/<%= user.id_kategori %>" class="edit">Edit</a> <a href="/kategori/delete/<%= user.id_kategori %>" class="delete" onclick="return confirm('Apakah kamu yakin ingin menghapus kategori ini?');">Delete</a></td>
     </tr>
   <% }); %>
 
