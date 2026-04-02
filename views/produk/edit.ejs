@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Edit Produk</title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+  </head>
+  <body>
+    <div class="form-card">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h1>Edit Produk</h1>
+        <a href="/produk" class="delete" style="text-decoration: none">Kembali</a>
+      </div>
+      <form action="/produk/update/<%= data.id_produk %>" method="POST">
+        <div class="form-group">
+          <label for="nama_produk" class="form-label required-field">Nama Produk</label>
+          <input type="text" id="nama_produk" name="nama_produk" class="form-input" placeholder="Masukkan nama produk..." value="<%= data.nama_produk %>" required />
+        </div>
+        <div class="form-group">
+          <label for="harga" class="form-label required-field">Harga</label>
+          <input type="number" id="harga" name="harga" class="form-input" placeholder="Masukkan harga..." value="<%= data.harga %>" required />
+        </div>
+        <div class="form-group">
+          <label for="stok" class="form-label required-field">Stok</label>
+          <input type="number" id="stok" name="stok" class="form-input" placeholder="Masukkan stok..." value="<%= data.stok %>" required />
+        </div>
+        <div class="form-group">
+          <label for="id_kategori" class="form-label required-field">Kategori</label>
+          <input type="number" id="id_kategori" name="id_kategori" class="form-input" placeholder="Masukkan ID kategori..." value="<%= data.id_kategori %>" required />
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn-save">Simpan</button>
+          <a href="/produk" class="btn-cancel">Batal</a>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>

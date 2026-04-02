@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.3.7/css/dataTables.dataTables.min.css" />
+  </head>
+  <body>
+    <div class="main-container">
+      <div class="header-section">
+        <h1>
+          <a href="/" style="position: relative; top: 4px;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+           Kategori
+          </h1>
+        <a href="kategori/create" class="btn btn-create">
+          <span class="icon">+</span> Tambah Kategori
+        </a>
+      </div>
+
+      <div class="table-card">
+        <table id="myTable" class="display">
+          <thead>
+            <tr>
+              <th width="10%">No</th>
+              <th>Nama Kategori</th>
+              <th width="20%">Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% data.forEach(function(user, index) { %>
+            <tr>
+              <td><%= index + 1 %></td>
+              <td class="font-medium"><%= user.nama_kategori %></td>
+              <td>
+                <div class="action-group">
+                  <a href="/kategori/edit/<%= user.id_kategori %>" class="btn-action edit">Edit</a>
+                  <a href="/kategori/delete/<%= user.id_kategori %>" class="btn-action delete" onclick="return confirm('Apakah kamu yakin ingin menghapus kategori ini?');">Delete</a>
+                </div>
+              </td>
+            </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.datatables.net/2.3.7/js/dataTables.min.js"></script>
+    <script>
+      $(document).ready(function() {
+        $('#myTable').DataTable({
+          responsive: true,
+          language: {
+            search: "_INPUT_",
+            searchPlaceholder: "Cari kategori...",
+            lengthMenu: "_MENU_ data per halaman",
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

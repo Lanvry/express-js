@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Edit Kategori</title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+  </head>
+  <body>
+    <div class="form-card">
+      <div
+        style="
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        "
+      >
+        <h1>Edit Kategori</h1>
+        <a href="/kategori" class="delete" style="text-decoration: none"
+          >Kembali</a
+        >
+      </div>
+      
+      <form action="/kategori/update/<%= data.id_kategori %>" method="POST">
+        <div class="form-group">
+          <label for="nama_kategori" class="form-label required-field"
+            >Nama Kategori</label
+          >
+          <input
+            type="text"
+            id="nama_kategori"
+            name="nama_kategori"
+            class="form-input"
+            placeholder="Masukkan nama kategori..."
+            value="<%= data.nama_kategori %>"
+            required
+          />
+        </div>
+
+        <!-- Hidden field untuk mengirim ID kategori -->
+        <input type="hidden" name="id_kategori" value="<%= data.id_kategori %>" />
+        <div class="form-actions">
+          <button type="submit" class="btn-save">Simpan</button>
+          <a href="/kategori" class="btn-cancel">Batal</a>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>
