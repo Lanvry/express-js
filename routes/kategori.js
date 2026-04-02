@@ -25,6 +25,7 @@ router.post("/store", function(req, res, next){
   const kategori = req.body.nama_kategori;
   Kategori.store(kategori)
     .then(() => {
+      req.flash("success", "Kategori berhasil ditambahkan!");
       res.redirect("/kategori");
     })
     .catch((err) => {
@@ -37,6 +38,7 @@ router.get("/delete/:id", function(req, res, next){
   const idKategori = req.params.id;
   Kategori.delete(idKategori)
     .then(() => {
+      req.flash("success", "Kategori berhasil dihapus!");
       res.redirect("/kategori");
     })
     .catch((err) => {
@@ -65,6 +67,7 @@ router.post("/update/:id", function(req, res, next){
   const namaKategori = req.body.nama_kategori;
   Kategori.update(idKategori, namaKategori)
     .then(() => {
+      req.flash("success", "Kategori berhasil diubah!");
       res.redirect("/kategori");
     })
     .catch((err) => {

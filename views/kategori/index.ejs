@@ -1,12 +1,4 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/stylesheets/style.css" />
-    <link rel="stylesheet" href="https://cdn.datatables.net/2.3.7/css/dataTables.dataTables.min.css" />
-  </head>
-  <body>
+<%- include('../partials/_head') %>
     <div class="main-container">
       <div class="header-section">
         <h1>
@@ -48,20 +40,4 @@
         </table>
       </div>
     </div>
-
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="https://cdn.datatables.net/2.3.7/js/dataTables.min.js"></script>
-    <script>
-      $(document).ready(function() {
-        $('#myTable').DataTable({
-          responsive: true,
-          language: {
-            search: "_INPUT_",
-            searchPlaceholder: "Cari kategori...",
-            lengthMenu: "_MENU_ data per halaman",
-          }
-        });
-      });
-    </script>
-  </body>
-</html>
+<%- include('../partials/_foot') %>
