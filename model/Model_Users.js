@@ -26,6 +26,32 @@ class Users {
       });
     });
   }
+
+  static async GetById(id_users) {
+    return new Promise((resolve, reject) => {
+      const query = "SELECT * FROM users WHERE id_users = ?";
+      connection.query(query, [id_users], function (err, result) {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(result[0] || null);
+        }
+      });
+    });
+  }
+
+  static async UpdatePassword(id_users, password) {
+    return new Promise((resolve, reject) => {
+      const query = "UPDATE users SET password = ? WHERE id_users = ?";
+      connection.query(query, [password, id_users], function (err, result) {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(result);
+        }
+      });
+    });
+  }
 }
 
 module.exports = Users;

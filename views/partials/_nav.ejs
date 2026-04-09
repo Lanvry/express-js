@@ -9,7 +9,7 @@
   <div style="display: flex; gap: 15px; align-items: center;">
     <% if (typeof user !== 'undefined' && user) { %>
       <span style="color: #0f172a; font-weight: 500; font-size: 0.95rem;"><%= user.email %></span>
+      <a href="/logout" style="text-decoration: none; color: #e40a0a; font-weight: 500;">Logout</a>
     <% } %>
-    <a href="/logout" style="text-decoration: none; color: #e40a0a; font-weight: 500;">Logout</a>
   </div>
 </nav>
