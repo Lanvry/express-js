@@ -37,6 +37,11 @@ app.use(session({
 
 app.use(flash())
 
+app.use(function(req, res, next) {
+  res.locals.user = req.session.user || null;
+  next();
+});
+
 const CheckLogin = (req, res, next) => {
   if(req.session.isLoggedIn){
     next();
@@ -47,10 +52,10 @@ const CheckLogin = (req, res, next) => {
 }
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
 app.use('/test', testRouter);
 app.use('/kipk', kipkRouter);
 app.use('/produk', CheckLogin, produkRouter);
+app.use('/users', CheckLogin, usersRouter)
 app.use('/kategori', CheckLogin, kategoriRouter);
 
 // catch 404 and forward to error handler

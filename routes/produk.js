@@ -99,7 +99,7 @@ router.get("/delete/:id", async function(req, res, next){
       const imagePath = path.join(__dirname, "../public/images", produk.gambar);
       if (fs.existsSync(imagePath)) {
         fs.unlinkSync(imagePath);
-      }
+      } 
     }
     await Produk.delete(idProduk);
     res.redirect("/produk");

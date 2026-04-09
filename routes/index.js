@@ -27,6 +27,8 @@ router.post("/loginSave", async function(req, res, next) {
        const user = Data[0];
        if (bcrypt.compareSync(password, user.password)) {
           console.log('login berhasil');
+          delete user.password;
+          req.session.user = user;
           req.session.isLoggedIn = true;
           res.redirect("/");
        } else {
