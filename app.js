@@ -1,12 +1,11 @@
 var createError = require('http-errors');
 var express = require('express');
+var session = require('express-session');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var flash = require('express-flash');
-var session = require('express-session')
-
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var testRouter = require('./routes/test');
@@ -28,7 +27,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(session({
   cookie: {
-    maxAge: 6000
+    maxAge: 1000 * 60 * 60 * 24 // 1 hari
   },
   store: new session.MemoryStore,
   saveUninitialized: true,
@@ -38,12 +37,21 @@ app.use(session({
 
 app.use(flash())
 
+const CheckLogin = (req, res, next) => {
+  if(req.session.isLoggedIn){
+    next();
+  }
+  else{
+    res.redirect('/login');
+  }
+}
+
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/test', testRouter);
 app.use('/kipk', kipkRouter);
-app.use('/produk', produkRouter);
-app.use('/kategori', kategoriRouter);
+app.use('/produk', CheckLogin, produkRouter);
+app.use('/kategori', CheckLogin, kategoriRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

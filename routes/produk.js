@@ -1,6 +1,21 @@
 var express = require("express");
 var router = express.Router();
 const Produk = require("../model/Model_Produk");
+const Kategori = require("../model/Model_Kategori");
+const multer = require("multer");
+const path = require("path");
+const fs = require("fs");
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, path.join(__dirname, "../public/images"));
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + path.extname(file.originalname));
+  },
+});
+
+const upload = multer({ storage: storage });
 
 // GET all produk
 router.get("/", async function (req, res, next) {
@@ -12,8 +27,6 @@ router.get("/", async function (req, res, next) {
 });
 
 // GET create produk form
-const Kategori = require("../model/Model_Kategori");
-
 router.get("/create", async function(req, res, next){
   let kategori = await Kategori.getAll();
   res.render("produk/create", {
@@ -23,9 +36,10 @@ router.get("/create", async function(req, res, next){
 });
 
 // POST store produk
-router.post("/store", function(req, res, next){
+router.post("/store", upload.single("gambar"), function(req, res, next){
   const { nama_produk, harga, stok, id_kategori } = req.body;
-  Produk.store(nama_produk, harga, stok, id_kategori)
+  const gambar = req.file ? req.file.filename : null;
+  Produk.store(nama_produk, harga, stok, id_kategori, gambar)
     .then(() => {
       res.redirect("/produk");
     })
@@ -36,46 +50,63 @@ router.post("/store", function(req, res, next){
 });
 
 // GET edit produk form
-router.get("/edit/:id", function(req, res, next){
+router.get("/edit/:id", async function(req, res, next){
   const idProduk = req.params.id;
-  Produk.getById(idProduk)
-    .then((data) => {
-      res.render("produk/edit", {
-        data,
-        title: "Edit Produk"
-      });
-    })
-    .catch((err) => {
-      console.error("Error : ", err);
-      return res.status(500).send("Terjadi Kesalahan, Error : " + err);
+  try {
+    const data = await Produk.getById(idProduk);
+    const kategori = await Kategori.getAll();
+    res.render("produk/edit", {
+      data,
+      kategori,
+      title: "Edit Produk"
     });
+  } catch (err) {
+    console.error("Error : ", err);
+    return res.status(500).send("Terjadi Kesalahan, Error : " + err);
+  }
 });
 
 // POST update produk
-router.post("/update/:id", function(req, res, next){
+router.post("/update/:id", upload.single("gambar"), async function(req, res, next){
   const idProduk = req.params.id;
   const { nama_produk, harga, stok, id_kategori } = req.body;
-  Produk.update(idProduk, nama_produk, harga, stok, id_kategori)
-    .then(() => {
-      res.redirect("/produk");
-    })
-    .catch((err) => {
-      console.error("Error : ", err);
-      return res.status(500).send("Terjadi Kesalahan, Error : " + err);
-    });
+  const gambar = req.file ? req.file.filename : null;
+
+  try {
+    if (gambar) {
+      const produkLama = await Produk.getById(idProduk);
+      if (produkLama && produkLama.gambar) {
+        const oldPath = path.join(__dirname, "../public/images", produkLama.gambar);
+        if (fs.existsSync(oldPath)) {
+          fs.unlinkSync(oldPath);
+        }
+      }
+    }
+    await Produk.update(idProduk, nama_produk, harga, stok, id_kategori, gambar);
+    res.redirect("/produk");
+  } catch (err) {
+    console.error("Error : ", err);
+    return res.status(500).send("Terjadi Kesalahan, Error : " + err);
+  }
 });
 
 // GET delete produk
-router.get("/delete/:id", function(req, res, next){
+router.get("/delete/:id", async function(req, res, next){
   const idProduk = req.params.id;
-  Produk.delete(idProduk)
-    .then(() => {
-      res.redirect("/produk");
-    })
-    .catch((err) => {
-      console.error("Error : ", err);
-      return res.status(500).send("Terjadi Kesalahan, Error : " + err);
-    });
+  try {
+    const produk = await Produk.getById(idProduk);
+    if (produk && produk.gambar) {
+      const imagePath = path.join(__dirname, "../public/images", produk.gambar);
+      if (fs.existsSync(imagePath)) {
+        fs.unlinkSync(imagePath);
+      }
+    }
+    await Produk.delete(idProduk);
+    res.redirect("/produk");
+  } catch (err) {
+    console.error("Error : ", err);
+    return res.status(500).send("Terjadi Kesalahan, Error : " + err);
+  }
 });
 
 module.exports = router;

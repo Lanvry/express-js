@@ -10,7 +10,7 @@
         <h1>Edit Produk</h1>
         <a href="/produk" class="delete" style="text-decoration: none">Kembali</a>
       </div>
-      <form action="/produk/update/<%= data.id_produk %>" method="POST">
+      <form action="/produk/update/<%= data.id_produk %>" method="POST" enctype="multipart/form-data">
         <div class="form-group">
           <label for="nama_produk" class="form-label required-field">Nama Produk</label>
           <input type="text" id="nama_produk" name="nama_produk" class="form-input" placeholder="Masukkan nama produk..." value="<%= data.nama_produk %>" required />
@@ -25,7 +25,22 @@
         </div>
         <div class="form-group">
           <label for="id_kategori" class="form-label required-field">Kategori</label>
-          <input type="number" id="id_kategori" name="id_kategori" class="form-input" placeholder="Masukkan ID kategori..." value="<%= data.id_kategori %>" required />
+          <select id="id_kategori" name="id_kategori" class="form-input" required>
+            <option value="">-- Pilih Kategori --</option>
+            <% kategori.forEach(function(item) { %>
+              <option value="<%= item.id_kategori %>" <%= data.id_kategori === item.id_kategori ? 'selected' : '' %>><%= item.nama_kategori %></option>
+            <% }) %>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="gambar" class="form-label">Gambar Produk Baru (Opsional)</label>
+          <input type="file" id="gambar" name="gambar" class="form-input" accept="image/*" />
+          <% if (data.gambar) { %>
+            <div style="margin-top: 10px;">
+              <small>Gambar saat ini:</small><br>
+              <img src="/images/<%= data.gambar %>" alt="Gambar Produk" style="max-height: 100px; border-radius: 5px;">
+            </div>
+          <% } %>
         </div>
         <div class="form-actions">
           <button type="submit" class="btn-save">Simpan</button>

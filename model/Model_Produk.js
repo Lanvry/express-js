@@ -13,10 +13,10 @@ class Produk {
     });
   }
 
-  static async store(nama_produk, harga, stok, id_kategori) {
+  static async store(nama_produk, harga, stok, id_kategori, gambar) {
     return new Promise((resolve, reject) => {
-      const query = "INSERT INTO produk (nama_produk, harga, stok, id_kategori) VALUES (?, ?, ?, ?)";
-      connection.query(query, [nama_produk, harga, stok, id_kategori], function (err, result) {
+      const query = "INSERT INTO produk (nama_produk, harga, stok, id_kategori, gambar) VALUES (?, ?, ?, ?, ?)";
+      connection.query(query, [nama_produk, harga, stok, id_kategori, gambar], function (err, result) {
         if (err) {
           reject(err);
         } else {
@@ -26,10 +26,18 @@ class Produk {
     });
   }
 
-  static async update(id_produk, nama_produk, harga, stok, id_kategori) {
+  static async update(id_produk, nama_produk, harga, stok, id_kategori, gambar) {
     return new Promise((resolve, reject) => {
-      const query = "UPDATE produk SET nama_produk = ?, harga = ?, stok = ?, id_kategori = ? WHERE id_produk = ?";
-      connection.query(query, [nama_produk, harga, stok, id_kategori, id_produk], function (err, result) {
+      let query = "UPDATE produk SET nama_produk = ?, harga = ?, stok = ?, id_kategori = ?";
+      let params = [nama_produk, harga, stok, id_kategori];
+      if (gambar) {
+        query += ", gambar = ?";
+        params.push(gambar);
+      }
+      query += " WHERE id_produk = ?";
+      params.push(id_produk);
+
+      connection.query(query, params, function (err, result) {
         if (err) {
           reject(err);
         } else {

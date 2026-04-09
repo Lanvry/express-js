@@ -22,6 +22,7 @@
               <th>Harga</th>
               <th>Stok</th>
               <th>Kategori</th>
+              <th>Gambar</th>
               <th>Aksi</th>
             </tr>
           </thead>
@@ -33,6 +34,13 @@
               <td><%= produk.harga %></td>
               <td><%= produk.stok %></td>
               <td><%= produk.id_kategori %></td>
+              <td>
+                <% if (produk.gambar) { %>
+                  <img src="/images/<%= produk.gambar %>" alt="<%= produk.nama_produk %>" style="max-height: 60px; border-radius: 4px;">
+                <% } else { %>
+                  <span>-</span>
+                <% } %>
+              </td>
               <td>
                 <a href="/produk/edit/<%= produk.id_produk %>" class="btn-action edit">Edit</a>
                 <a href="/produk/delete/<%= produk.id_produk %>" class="btn-action delete" onclick="return confirm('Yakin hapus?')">Delete</a>
