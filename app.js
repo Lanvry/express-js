@@ -13,6 +13,10 @@ var kipkRouter = require('./routes/kipk');
 var produkRouter = require('./routes/produk');
 var kategoriRouter = require('./routes/kategori');
 
+
+var ApiKategoriRouter = require('./routes/api/kategori');
+var ApiProdukRouter = require('./routes/api/produk');
+
 var app = express();
 
 // view engine setup
@@ -57,6 +61,9 @@ app.use('/kipk', kipkRouter);
 app.use('/produk', CheckLogin, produkRouter);
 app.use('/users', CheckLogin, usersRouter)
 app.use('/kategori', CheckLogin, kategoriRouter);
+
+app.use('/api/kategori', ApiKategoriRouter)
+app.use('/api/produk', ApiProdukRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

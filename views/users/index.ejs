@@ -7,43 +7,30 @@
               <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </a>
-           Pengaturan Akun (<%= user.email %>)
+           Profil Pengguna
         </h1>
       </div>
 
       <div class="form-card">
-        <% if (messages && messages.error) { %>
-          <div style="background: #fef2f2; color: #b91c1c; border: 1px solid #fca5a5; padding: 12px 16px; border-radius: 8px; margin-bottom: 20px;">
-              <%= messages.error %>
-          </div>
-        <% } %>
         <% if (messages && messages.success) { %>
           <div style="background: #f0fdf4; color: #15803d; border: 1px solid #86efac; padding: 12px 16px; border-radius: 8px; margin-bottom: 20px;">
               <%= messages.success %>
           </div>
         <% } %>
 
-        <form action="/users/change-password" method="POST">
-          <div class="form-group">
-            <label class="form-label required-field" for="old_password">Password Lama</label>
-            <input type="password" id="old_password" name="old_password" class="form-input" required placeholder="Masukkan password lama...">
+        <div style="margin-bottom: 24px; text-align: center;">
+          <div style="width: 100px; height: 100px; background: #e2e8f0; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px auto; font-size: 32px; color: #64748b;">
+            👤
           </div>
-          
-          <div class="form-group">
-            <label class="form-label required-field" for="new_password">Password Baru</label>
-            <input type="password" id="new_password" name="new_password" class="form-input" required placeholder="Masukkan password baru...">
-          </div>
-          
-          <div class="form-group">
-            <label class="form-label required-field" for="confirm_password">Konfirmasi Password Baru</label>
-            <input type="password" id="confirm_password" name="confirm_password" class="form-input" required placeholder="Konfirmasi password baru...">
-          </div>
-          
-          <div class="form-actions">
-            <button type="submit" class="btn-save">Simpan Perubahan</button>
-            <a href="/" class="btn-cancel">Batal</a>
-          </div>
-        </form>
+          <h2 style="margin: 0 0 8px 0; color: #0f172a;"><%= user.email.split('@')[0] %></h2>
+          <p style="margin: 0; color: #64748b;"><%= user.email %></p>
+        </div>
+
+        <hr style="border: none; border-top: 1px solid #e2e8f0; margin-bottom: 24px;">
+
+        <div class="form-actions" style="justify-content: center; gap: 16px;">
+          <a href="/users/changepassword" class="btn-save" style="text-decoration: none; display: inline-block;">Ubah Password</a>
+        </div>
       </div>
     </div>
 <%- include('../partials/_foot') %>
