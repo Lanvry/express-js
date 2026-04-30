@@ -4,6 +4,7 @@ const Produk = require("../../model/Model_Produk");
 const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
+var verifyToken = require("../../config/middleware/jwt");
 
 
 const storage = multer.diskStorage({
@@ -57,7 +58,7 @@ router.get("/:id", async function(req, res, next){
     })
 })
 
-router.post("/store", upload.single("gambar"), function(req, res, next){
+router.post("/store", verifyToken, upload.single("gambar"), function(req, res, next){
     const { nama_produk, harga, kategori, stok } = req.body;
     const gambar = req.file ? req.file.filename : null;
     
@@ -79,7 +80,7 @@ router.post("/store", upload.single("gambar"), function(req, res, next){
 })
 
 
-router.post("/update/:id", upload.single("gambar"), async function(req, res, next){
+router.post("/update/:id", verifyToken, upload.single("gambar"), async function(req, res, next){
     const idProduk = req.params.id;
     const { nama_produk, harga, kategori, stok } = req.body;
     const gambar = req.file ? req.file.filename : null;
@@ -116,7 +117,7 @@ router.post("/update/:id", upload.single("gambar"), async function(req, res, nex
     }
 })
 
-router.get("/delete/:id", async function(req, res, next){
+router.get("/delete/:id", verifyToken, async function(req, res, next){
     const idProduk = req.params.id;
     try {
         const produk = await Produk.getById(idProduk);

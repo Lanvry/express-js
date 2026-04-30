@@ -4,11 +4,12 @@ const Kategori = require("../../model/Model_Kategori");
 const multer = require("multer");
 const upload = multer();
 
+var verifyToken = require("../../config/middleware/jwt");
 
 
 
 /* GET home page. */
-router.get("/", async function (req, res, next) {
+router.get("/", verifyToken, async function (req, res, next) {
   let rows = await Kategori.getAll();
   return res.status(200).json({
     status: "200 OK",
@@ -17,7 +18,7 @@ router.get("/", async function (req, res, next) {
   });
 });
 
-router.get("/:id", async function(req, res, next){
+router.get("/:id", verifyToken, async function(req, res, next){
   const kategori = req.params.id;
   Kategori.getById(kategori)
   .then((data) => {
@@ -44,7 +45,7 @@ router.get("/:id", async function(req, res, next){
 })
 
 
-router.post("/store", upload.none(), function(req, res, next){
+router.post("/store", verifyToken, upload.none(), function(req, res, next){
 
   const kategori = req.body.nama_kategori;
   if (!kategori) {
@@ -71,7 +72,7 @@ router.post("/store", upload.none(), function(req, res, next){
 })
 
 
-router.get("/delete/:id", function(req, res, next){
+router.get("/delete/:id", verifyToken, function(req, res, next){
   const idKategori = req.params.id;
   Kategori.delete(idKategori)
     .then((result) => {
@@ -91,7 +92,7 @@ router.get("/delete/:id", function(req, res, next){
 })
 
 
-router.get("/edit/:id", function(req, res, next){
+router.get("/edit/:id", verifyToken, function(req, res, next){
   const idKategori = req.params.id;
   Kategori.getById(idKategori)
     .then((data) => {
@@ -110,7 +111,7 @@ router.get("/edit/:id", function(req, res, next){
     });
 })
 
-router.post("/update/:id", upload.none(), function(req, res, next){
+router.post("/update/:id", verifyToken, upload.none(), function(req, res, next){
 
   const idKategori = req.params.id;
   const namaKategori = req.body.nama_kategori;

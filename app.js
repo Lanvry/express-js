@@ -5,6 +5,9 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+var dotenv = require('dotenv');
+dotenv.config();
+
 var flash = require('express-flash');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -12,7 +15,8 @@ var testRouter = require('./routes/test');
 var kipkRouter = require('./routes/kipk');
 var produkRouter = require('./routes/produk');
 var kategoriRouter = require('./routes/kategori');
-
+var registerUser = require('./routes/auth/register');
+var loginUser = require('./routes/auth/login');
 
 var ApiKategoriRouter = require('./routes/api/kategori');
 var ApiProdukRouter = require('./routes/api/produk');
@@ -55,18 +59,25 @@ const CheckLogin = (req, res, next) => {
   }
 }
 
+// API Routes
+app.use('/api/kategori', ApiKategoriRouter);
+app.use('/api/produk', ApiProdukRouter);
+app.use('/api/register', registerUser);
+app.use('/api/login', loginUser);
+
+// Web Routes
 app.use('/', indexRouter);
 app.use('/test', testRouter);
 app.use('/kipk', kipkRouter);
 app.use('/produk', CheckLogin, produkRouter);
-app.use('/users', CheckLogin, usersRouter)
+app.use('/users', CheckLogin, usersRouter);
 app.use('/kategori', CheckLogin, kategoriRouter);
-
-app.use('/api/kategori', ApiKategoriRouter)
-app.use('/api/produk', ApiProdukRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
+  if (req.path.startsWith('/api')) {
+    return res.status(404).json({ message: "API endpoint not found" });
+  }
   next(createError(404));
 });
 
