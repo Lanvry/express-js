@@ -22,6 +22,10 @@ var ApiKategoriRouter = require('./routes/api/kategori');
 var ApiProdukRouter = require('./routes/api/produk');
 
 var app = express();
+const cors = require('cors');
+// const { OnlyDomain } = require('./config/middleware/corsOptions');
+
+app.use(cors());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
