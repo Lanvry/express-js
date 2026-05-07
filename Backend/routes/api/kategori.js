@@ -9,7 +9,7 @@ var verifyToken = require("../../config/middleware/jwt");
 
 
 /* GET home page. */
-router.get("/", verifyToken, async function (req, res, next) {
+router.get("/", async function (req, res, next) {
   let rows = await Kategori.getAll();
   return res.status(200).json({
     status: "200 OK",

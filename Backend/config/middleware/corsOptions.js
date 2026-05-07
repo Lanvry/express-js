@@ -1,5 +1,5 @@
 const OnlyDomain = {
-    origin: ['http://localhost:3000'],
+    origin: ['http://localhost:8000'],
     credentials: false
 }
 
